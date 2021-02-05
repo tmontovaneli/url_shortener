@@ -22,11 +22,6 @@ public class URLService {
     @Inject
     private IGenerateIdentity generateIdentity;
 
-    public URLService(IURLRepository urlRepository, IGenerateIdentity generateIdentity) {
-        this.urlRepository = urlRepository;
-        this.generateIdentity = generateIdentity;
-    }
-
     public String shorten(String url) {
         Supplier<URL> supplier = () -> {
             String id = generateIdentity.generateId(url);
@@ -47,7 +42,7 @@ public class URLService {
             return u;
         };
 
-        return String.format("%s%s", _DOMAIN, urlRepository.findByURL(url).orElseGet(supplier).key());
+        return String.format("%s%s", _DOMAIN, urlRepository.findByURL(url).orElseGet(supplier).key());        
     }
 
     public String getOriginalUrl(String shortenedURL) {
